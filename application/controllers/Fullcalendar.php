@@ -10,9 +10,21 @@ class Fullcalendar extends CI_Controller {
 	{
 		$this->load->view('calendar/index');
 	}
+	public function code_warna()
+	{
+		$data = [
+			'1' => ['bg' => '#0073b7','bc' => '#0073b7'],
+			'2' => ['bg' => '#00a65a','bc' => '#00a65a']
+		];
+		return $data;
+	}
 	function load()
 	{
 		$event_data = $this->fullcalendar_model->fetch_all_event();
+		$code_warna = $this->code_warna();
+		// foreach ($code_warna as $key => $value) {
+	 //        echo $key.' '.$value['bg'].' '.$value['bc'].'<br>';
+	 //    }
 		foreach($event_data->result_array() as $row)
 		{
 			$data[] = array(
@@ -29,7 +41,8 @@ class Fullcalendar extends CI_Controller {
 	}
 	function tampil()
 	{
-		$this->load->view('calendar/tampil');
+		$d['data'] = $this->code_warna();
+		$this->load->view('calendar/tampil',$d);
 	}
 	function insert()
 	{
